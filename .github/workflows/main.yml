@@ -23,14 +23,11 @@ jobs:
           node-version: '18'
 
       - name: 📦 Install dependencies
-        run: npm install
-
-      - name: 🔧 Install ESLint and required plugins
-        run: |
-          npm install --save-dev eslint@^9.29.0 eslint-plugin-react @eslint/js
+        run: npm ci
 
       - name: 🔍 Run ESLint
-        run:  node --input-type=module --loader node_modules/eslint/experimental-loader.mjs node_modules/eslint/bin/eslint.js .
+        run: |
+          node --input-type=module --loader node_modules/eslint/experimental-loader.mjs node_modules/eslint/bin/eslint.js .
 
       - name: ✅ Run unit tests with coverage
         run: npm test -- --coverage
@@ -48,7 +45,6 @@ jobs:
         run: |
           cd android
           ./gradlew assembleRelease
-
 
       # - name: 📦 Upload release APK to Firebase
       #   uses: wzieba/Firebase-Distribution-Github-Action@v1
