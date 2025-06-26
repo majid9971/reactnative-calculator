@@ -22,12 +22,13 @@ jobs:
         with:
           node-version: '18'
 
-      - name: 📦 Install project dependencies
+      - name: 📆 Install project dependencies
         run: npm install
 
       - name: 🏗️ Generate Android folder (React Native CLI)
         run: |
-          npx react-native init tempApp
+          npm install -g react-native-cli
+          react-native init tempApp --version 0.73.0 --skip-install
           cp -r tempApp/android ./android
           rm -rf tempApp
 
