@@ -25,10 +25,14 @@ jobs:
       - name: 📦 Install dependencies
         run: npm install
 
-      - name: 🔍 Lint the code
+      - name: 🔧 Install ESLint and required plugins
+        run: |
+          npm install --save-dev eslint @eslint/js eslint-plugin-react
+
+      - name: 🔍 Run ESLint
         run: npx eslint .
 
-      - name: ✅ Run unit tests
+      - name: ✅ Run unit tests with coverage
         run: npm test -- --coverage
 
       - name: ☕ Set up Java
@@ -44,6 +48,7 @@ jobs:
         run: |
           cd android
           ./gradlew assembleRelease
+
 
       # - name: 📦 Upload release APK to Firebase
       #   uses: wzieba/Firebase-Distribution-Github-Action@v1
