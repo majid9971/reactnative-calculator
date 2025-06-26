@@ -1,0 +1,54 @@
+name: React Native Android CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  build:
+    name: Build & Distribute Android
+    runs-on: ubuntu-latest
+
+    env:
+      NODE_ENV: production
+
+    steps:
+      - name: ⬇️ Checkout repository
+        uses: actions/checkout@v3
+
+      - name: 🟢 Set up Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: 📦 Install dependencies
+        run: npm install
+
+      - name: 🔍 Lint the code
+        run: npx eslint .
+
+      - name: ✅ Run unit tests
+        run: npm test -- --coverage
+
+      - name: ☕ Set up Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '11'
+
+      - name: 🤖 Set up Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: 🏗️ Build Android release APK
+        run: |
+          cd android
+          ./gradlew assembleRelease
+
+      # - name: 📦 Upload release APK to Firebase
+      #   uses: wzieba/Firebase-Distribution-Github-Action@v1
+      #   with:
+      #     appId: ${{ secrets.FIREBASE_APP_ID }}
+      #     token: ${{ secrets.FIREBASE_CREDENTIALS_JSON }}
+      #     groups: ${{ secrets.FIREBASE_TESTERS }}
+      #     file: android/app/build/outputs/apk/release/app-release.apk
