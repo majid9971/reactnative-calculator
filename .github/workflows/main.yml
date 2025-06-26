@@ -27,7 +27,7 @@ jobs:
 
       - name: 🔧 Install ESLint and required plugins
         run: |
-          npm install --save-dev eslint @eslint/js eslint-plugin-react
+          npm install --save-dev eslint@^9.29.0 eslint-plugin-react @eslint/js
 
       - name: 🔍 Run ESLint
         run: npx eslint .
