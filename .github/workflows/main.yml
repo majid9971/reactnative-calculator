@@ -17,7 +17,7 @@ jobs:
       - name: ⬇️ Checkout repository
         uses: actions/checkout@v3
 
-      - name: 🟢 Set up Node.js
+      - name: 🔵 Set up Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '18'
@@ -25,12 +25,12 @@ jobs:
       - name: 📆 Install project dependencies
         run: npm install
 
-      - name: 🏗️ Generate Android folder (React Native CLI)
+      - name: ✅ Add index.js entry file (required for bundle)
         run: |
-          npm install -g react-native-cli
-          react-native init tempApp --version 0.73.0 --skip-install
-          cp -r tempApp/android ./android
-          rm -rf tempApp
+          echo "import {AppRegistry} from 'react-native';" > index.js
+          echo "import App from './App';" >> index.js
+          echo "import {name as appName} from './app.json';" >> index.js
+          echo "AppRegistry.registerComponent(appName, () => App);" >> index.js
 
       - name: ☕ Set up Java
         uses: actions/setup-java@v3
@@ -40,6 +40,13 @@ jobs:
 
       - name: 🤖 Set up Android SDK
         uses: android-actions/setup-android@v3
+
+      - name: 🏗️ Generate Android folder using React Native CLI
+        run: |
+          npm install -g react-native-cli
+          react-native init tempApp --version 0.73.0 --skip-install
+          cp -r tempApp/android ./android
+          rm -rf tempApp
 
       - name: 🏗️ Build Android release APK
         run: |
