@@ -17,25 +17,20 @@ jobs:
       - name: ⬇️ Checkout repository
         uses: actions/checkout@v3
 
-      - name: 🟢 Set up Node
+      - name: 🟢 Set up Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '18'
 
-      - name: 📦 Install dependencies
-        run: |
-         npm install
-         npm install expo
-      # - name: 🔍 Run ESLint
-      #   run: |
-      #     node --input-type=module --loader node_modules/eslint/experimental-loader.mjs node_modules/eslint/bin/eslint.js .
+      - name: 📦 Install project dependencies
+        run: npm install
 
-      # - name: ✅ Run unit tests with coverage
-      #   run: npm test -- --coverage
-      
-      - name: 🚀 Prebuild Expo project to generate android/
-        run: npx expo prebuild
-        
+      - name: 🏗️ Generate Android folder (React Native CLI)
+        run: |
+          npx react-native init tempApp
+          cp -r tempApp/android ./android
+          rm -rf tempApp
+
       - name: ☕ Set up Java
         uses: actions/setup-java@v3
         with:
@@ -50,10 +45,10 @@ jobs:
           cd android
           ./gradlew assembleRelease
 
-      # - name: 📦 Upload release APK to Firebase
+      # - name: 🚀 Upload APK to Firebase App Distribution
       #   uses: wzieba/Firebase-Distribution-Github-Action@v1
       #   with:
       #     appId: ${{ secrets.FIREBASE_APP_ID }}
       #     token: ${{ secrets.FIREBASE_CREDENTIALS_JSON }}
-      #     groups: ${{ secrets.FIREBASE_TESTERS }}
+      #     groups: testers
       #     file: android/app/build/outputs/apk/release/app-release.apk
