@@ -23,8 +23,9 @@ jobs:
           node-version: '18'
 
       - name: 📦 Install dependencies
-        run: npm install
-
+        run: |
+         npm install
+         npm install expo
       # - name: 🔍 Run ESLint
       #   run: |
       #     node --input-type=module --loader node_modules/eslint/experimental-loader.mjs node_modules/eslint/bin/eslint.js .
