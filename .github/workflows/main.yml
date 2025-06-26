@@ -31,7 +31,10 @@ jobs:
 
       # - name: ✅ Run unit tests with coverage
       #   run: npm test -- --coverage
-
+      
+      - name: 🚀 Prebuild Expo project to generate android/
+        run: npx expo prebuild
+        
       - name: ☕ Set up Java
         uses: actions/setup-java@v3
         with:
