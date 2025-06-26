@@ -1,6 +1,6 @@
-// eslint.config.js
-import eslintPluginReact from 'eslint-plugin-react';
+// eslint.config.mjs
 import js from '@eslint/js';
+import react from 'eslint-plugin-react';
 
 export default [
   js.configs.recommended,
@@ -11,12 +11,11 @@ export default [
       sourceType: 'module',
     },
     plugins: {
-      react: eslintPluginReact,
+      react,
     },
     rules: {
-      // customize rules here
       'no-unused-vars': 'warn',
-      'react/react-in-jsx-scope': 'off', // Not needed with React 17+
+      'react/react-in-jsx-scope': 'off',
     },
   },
 ];
