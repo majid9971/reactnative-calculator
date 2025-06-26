@@ -29,8 +29,8 @@ jobs:
         run: |
           npm install --save-dev eslint@^9.29.0 eslint-plugin-react @eslint/js
 
-      # - name: 🔍 Run ESLint
-      #   run: npx eslint .
+      - name: 🔍 Run ESLint
+        run:  node --input-type=module --loader node_modules/eslint/experimental-loader.mjs node_modules/eslint/bin/eslint.js .
 
       - name: ✅ Run unit tests with coverage
         run: npm test -- --coverage
